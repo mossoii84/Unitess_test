@@ -1,0 +1,48 @@
+<p-button (click)="showDialog()" label="Создать событие" />
+
+<p-dialog [modal]="true" [(visible)]="visible">
+  <h3>создать или изменить событие</h3>
+
+  <form [formGroup]="formForEvent" (ngSubmit)="onSubmit()">
+    <p-floatlabel variant="on">
+      <label class="font-semibold w-24" for="name">Название</label>
+      <input pInputText id="name" formControlName="name" autocomplete="off" />
+    </p-floatlabel>
+
+    <p-floatlabel variant="on">
+      <label for="description">Описание</label>
+      <input pInputText  id="description"  formControlName="description"  autocomplete="off" />
+    </p-floatlabel>
+
+    <p-floatlabel variant="on">
+      <label for="address">Место проведения</label>
+      <input  pInputText id="address" formControlName="address" autocomplete="off" />
+    </p-floatlabel>
+
+    <p-floatlabel variant="on">
+      <p-select  class="select_other" formControlName="type"  (onChange)="onTypeChange($event)"  [options]="enumEventTypes"/>
+      <label for="type">Тип мероприятия</label>
+    </p-floatlabel>
+
+
+    <div>
+      @if(currentValue() === 'спорт'){
+        <app-sport-event-form [sport]="sport"></app-sport-event-form>
+      } 
+      @if(currentValue() === 'музыка'){
+        <app-music-event-form [music]="music"></app-music-event-form>
+      }
+    </div>
+
+    <div class="block_btn">
+      <p-button label="закрыть" severity="secondary" (click)="showDialog()" />
+
+      @if(openEditEvent()){
+        <p-button label="изменить"  severity="success"  (click)="saveEdit()"  [disabled]="formForEvent.invalid" />
+      } 
+      @else {
+        <p-button  label="сохранить"  type="submit"  [disabled]="formForEvent.invalid"  />
+      }
+    </div>
+  </form>
+</p-dialog>

@@ -1,0 +1,20 @@
+.table {
+  border: 1px solid rgb(197, 197, 197);
+  min-height: 400px;
+  margin: 50px;
+  border-radius: 10px;
+  border-collapse: collapse;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+tr:nth-child(odd) {
+  background-color: #cecdcd;
+}
+tr:nth-child(even) {
+  background-color: #ffffff;
+}
+.popup-page {
+  margin: 30px;
+  display: flex;
+  justify-content: end;
+}
