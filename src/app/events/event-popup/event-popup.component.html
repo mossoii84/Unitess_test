@@ -25,20 +25,24 @@
     </p-floatlabel>
 
 
-    <div>
-      @if(currentValue() === 'спорт'){
+    @switch (currentValue()) {
+      @case ('другое') {
+        <div></div>
+      }
+      @case ('спорт') {
         <app-sport-event-form [sport]="sport"></app-sport-event-form>
-      } 
-      @if(currentValue() === 'музыка'){
+      }
+      @case ('музыка') {
         <app-music-event-form [music]="music"></app-music-event-form>
       }
-    </div>
+    }
 
+    
     <div class="block_btn">
       <p-button label="закрыть" severity="secondary" (click)="showDialog()" />
 
       @if(openEditEvent()){
-        <p-button label="изменить"  severity="success"  (click)="saveEdit()"  [disabled]="formForEvent.invalid" />
+        <p-button label="подтвердить"  severity="success"  (click)="saveEdit()"  [disabled]="formForEvent.invalid" />
       } 
       @else {
         <p-button  label="сохранить"  type="submit"  [disabled]="formForEvent.invalid"  />

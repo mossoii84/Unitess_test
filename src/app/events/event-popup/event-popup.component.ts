@@ -6,10 +6,7 @@ import {
   ReactiveFormsModule,
   FormsModule,
 } from '@angular/forms';
-import {
-  EventModelType,
-  TypeForEvent,
-} from '../../types/event-model-type.type';
+import { EventModelType} from '../../types/event-model-type.type';
 import { ModelFormControls } from '../../types/model-form-controls.type';
 import { CommonModule } from '@angular/common';
 import { FloatLabel } from 'primeng/floatlabel';
@@ -52,7 +49,7 @@ export class EventPopupComponent {
       name: new FormControl<string | null>('', Validators.required),
       description: new FormControl<string | null>('', Validators.required),
       address: new FormControl<string | null>('', Validators.required),
-      type: new FormControl<TypeForEvent | null>('other', Validators.required),
+      type: new FormControl<string | null>('другое', Validators.required),
       sport: new FormControl<number | null>(0,  Validators.pattern(/^\d+$/)),
       music: new FormControl<string | null>(''),
     });
@@ -74,11 +71,13 @@ export class EventPopupComponent {
 
   showDialog() {
     this.openEditEvent.set(false);
+    this.currentValue.set('другое');
     this.formForEvent.reset();
     this.visible.update((v) => !v);
   }
 
   showDialogForEdit(event: EventModelType) {
+    this.currentValue.set(event.type);
     this.visible.set(true);
     this.openEditEvent.set(true);
     if (event) {
@@ -88,8 +87,8 @@ export class EventPopupComponent {
         description: event.description,
         address: event.address,
         type: event.type,
-        sport: event.type === 'sport' ?  event.sport : null,
-        music: event.type === 'music' ?  event.music : null,
+        sport: event.type === 'спорт' ?  event.sport : null,
+        music: event.type === 'музыка' ?  event.music : null,
       });
       this.selectedEvent = { ...event };
     }
@@ -98,8 +97,19 @@ export class EventPopupComponent {
   saveEdit() {
     const id = this.formForEvent.value.id;
     if (id && this.formForEvent.value) {
+
+      const type = this.formForEvent.value.type;
+      if (type === 'другое') {
+        this.formForEvent.patchValue({ sport: null, music: null });
+      } else if (type === 'спорт') {
+        this.formForEvent.patchValue({ music: null });
+      } else if (type === 'музыка') {
+        this.formForEvent.patchValue({ sport: null });
+      }
+
       this.apiService.editEventById(id, this.formForEvent.value as EventModelType );
     }
+    this.formForEvent.reset();
     this.visible.set(false);
   }
 

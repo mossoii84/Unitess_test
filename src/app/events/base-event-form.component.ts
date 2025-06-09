@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
-import { EventModelType, TypeForEvent } from '../types/event-model-type.type';
+import { EventModelType } from '../types/event-model-type.type';
 import { ButtonModule } from 'primeng/button';
 import { EventPopupComponent } from './event-popup/event-popup.component';
 import { ApiService } from '../services/api-service.service';
@@ -50,12 +50,12 @@ export class BaseEventFormComponent {
 
   get existsItemSportInEventList(): boolean {
     return this.eventsList().some(
-      event => event.type === 'спорт' as TypeForEvent
+      event => event.type === 'спорт'
     );
   }
   get existsItemMusicInEventList(): boolean {
     return this.eventsList().some(
-      event => event.type === 'музыка' as TypeForEvent
+      event => event.type === 'музыка'
     );
   }
 

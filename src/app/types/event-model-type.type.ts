@@ -4,9 +4,7 @@ export type EventModelType = {
   name:string;
   description:string;
   address: string;
-  type:TypeForEvent,
+  type:string,
   sport?:number,
   music?:string
 }
-
-export type TypeForEvent = 'sport' | 'music' | 'other';
